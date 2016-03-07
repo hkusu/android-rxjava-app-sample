@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lightBlue100">#B3E5FC</color>
+    <color name="lightBlue400">#29B6F6</color>
+    <color name="lightBlue900">#01579B</color>
+    <color name="deepOrangeA200">#FF6E40</color>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/lightBlue400</item>
+        <item name="colorPrimaryDark">@color/lightBlue900</item>
+        <item name="android:textColorPrimary">@color/lightBlue900</item>
+        <item name="android:windowBackground">@color/lightBlue100</item>
+        <item name="android:textColor">@color/lightBlue900</item>
+        <item name="colorButtonNormal">@color/lightBlue400</item>
+        <item name="colorAccent">@color/deepOrangeA200</item>
+    </style>
+</resources>
