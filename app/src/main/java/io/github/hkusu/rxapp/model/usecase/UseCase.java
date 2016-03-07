@@ -22,7 +22,13 @@ public class UseCase {
     }
 
     public Observable<List<Todo>> getTodo() {
-        return todoRepository.get();
+        return Observable.create(subs -> {
+            todoRepository.get()
+                    .subscribe(aTodoList -> {
+                        subs.onNext(aTodoList);
+                        subs.onCompleted();
+                    });
+        });
     }
 
     public Observable<Void> registerTodo(Todo todo) {

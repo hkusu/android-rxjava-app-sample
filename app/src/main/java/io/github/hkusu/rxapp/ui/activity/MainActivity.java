@@ -112,11 +112,13 @@ public class MainActivity extends AppCompatActivity {
     @MainThread
     private void updateView() {
         subscriptionManager.subscribeMainThread(
-                useCase.getTodo(), // 結果的にObservable型であればオペレータを繋ぐことも可能
+                useCase.getTodo()
+                        .doOnNext(aTodoList -> {
+                            // ListView のデータセットを変更
+                            todoList.clear();
+                            todoList.addAll(aTodoList);
+                        }),
                 aTodoList -> {
-                    // ListView のデータセットを変更
-                    todoList.clear();
-                    todoList.addAll(aTodoList);
                     // データセットの変更があった旨をAdapterへ通知
                     todoListAdapter.notifyDataSetChanged();
                     // Todoデータの件数表示を更新
