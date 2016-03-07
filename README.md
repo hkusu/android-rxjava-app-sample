@@ -9,7 +9,7 @@
 - [RxAndroid (ver 1.1.0)](https://github.com/ReactiveX/RxAndroid)
 - [Gradle Retrolambda Plugin (ver 3.2.5)](https://github.com/evant/gradle-retrolambda)
 - [Android Orma (ver 2.0.6)](https://github.com/gfx/Android-Orma)
-- [Butter Knife (ver 7.0.1)](http://jakewharton.github.io/butterknife)
+- [Butter Knife (ver 7.0.1)](https://github.com/JakeWharton/butterknife)
 - [Stetho (ver 1.2.0)](https://github.com/facebook/stetho)
 - [android-apt (ver 1.8)](https://bitbucket.org/hvisser/android-apt)
 
