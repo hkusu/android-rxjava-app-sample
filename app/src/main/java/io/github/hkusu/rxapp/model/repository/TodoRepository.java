@@ -54,8 +54,8 @@ public class TodoRepository {
 
     public Observable<Void> create(Todo todo) {
         return Observable.create(subs -> {
-            Todo.relation(orma).inserter().execute(todo);
-            refresh()
+            Todo.relation(orma).inserter().executeAsObservable(todo)
+                    .flatMapObservable(aLong -> refresh())
                     .subscribe(aVoid -> {
                         subs.onNext(null);
                         subs.onCompleted();
@@ -65,8 +65,8 @@ public class TodoRepository {
 
     public Observable<Void> delete(int id) {
         return Observable.create(subs -> {
-            Todo.relation(orma).deleter().idEq(id).execute();
-            refresh()
+            Todo.relation(orma).deleter().idEq(id).executeAsObservable()
+                    .flatMapObservable(aInteger -> refresh())
                     .subscribe(aVoid -> {
                         subs.onNext(null);
                         subs.onCompleted();
