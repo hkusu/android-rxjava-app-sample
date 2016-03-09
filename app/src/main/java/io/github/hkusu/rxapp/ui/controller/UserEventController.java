@@ -109,7 +109,7 @@ public class UserEventController extends ButterKnifeController<Void> {
         return true;
     }
 
-    // 画面での入力内容をRealmへ登録するPrivateメソッド
+    // 画面での入力内容をDBへ登録するPrivateメソッド
     @MainThread
     private void registerTodo() {
         Activity activity = getActivity();
