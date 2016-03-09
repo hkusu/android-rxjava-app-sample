@@ -22,7 +22,6 @@ import butterknife.OnTextChanged;
 import io.github.hkusu.rxapp.R;
 import io.github.hkusu.rxapp.model.usecase.UseCase;
 import io.github.hkusu.rxapp.util.SubscriptionManager;
-import io.github.hkusu.rxapp.util.Util;
 import io.github.hkusu.rxapp.ui.adapter.TodoListAdapter;
 import io.github.hkusu.rxapp.model.entity.Todo;
 import io.github.hkusu.rxapp.ui.controller.base.ButterKnifeController;
@@ -40,12 +39,12 @@ public class UserEventController extends ButterKnifeController<Void> {
     ListView todoListView;
 
     private final UseCase useCase;
-    private final SubscriptionManager subscriptionManager;
+    private final SubscriptionManager sm;
 
     @Inject
-    public UserEventController(UseCase useCase, SubscriptionManager subscriptionManager) {
+    public UserEventController(UseCase useCase, SubscriptionManager sm) {
         this.useCase = useCase;
-        this.subscriptionManager = subscriptionManager;
+        this.sm = sm;
     }
 
     @Override
@@ -62,18 +61,19 @@ public class UserEventController extends ButterKnifeController<Void> {
     @Override
     public void onResume() {
         // 削除ボタンの押下イベントを購読
-        subscriptionManager.subscribeMainThread(TodoListAdapter.ViewHolder.DeleteButtonClickedEvent.class, event -> {
+        sm.subscribeMainThread(TodoListAdapter.ViewHolder.DeleteButtonClickedEvent.class, event -> {
             // データ削除
-            subscriptionManager.subscribeMainThread(
+            sm.subscribeMainThread(
                     useCase.unregisterTodo(event.getId()),
-                    aVoid -> {}
+                    aVoid -> {
+                    }
             );
         });
     }
 
     @Override
     public void onPause() {
-        subscriptionManager.unsubscribe(); // 購読を解除
+        sm.unsubscribe(); // 購読を解除
     }
 
     // 入力エリアのテキスト変更
@@ -120,7 +120,7 @@ public class UserEventController extends ButterKnifeController<Void> {
         Todo todo = new Todo();
         todo.text = (todoEditText.getText().toString());
         // データ登録
-        subscriptionManager.subscribeMainThread(
+        sm.subscribeMainThread(
                 useCase.registerTodo(todo),
                 aVoid -> {
                     // 入力内容は空にする

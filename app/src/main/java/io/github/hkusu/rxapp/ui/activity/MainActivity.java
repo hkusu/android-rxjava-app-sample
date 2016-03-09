@@ -20,7 +20,6 @@ import io.github.hkusu.rxapp.R;
 import io.github.hkusu.rxapp.model.entity.Todo;
 import io.github.hkusu.rxapp.model.usecase.UseCase;
 import io.github.hkusu.rxapp.util.SubscriptionManager;
-import io.github.hkusu.rxapp.util.Util;
 import io.github.hkusu.rxapp.ui.controller.UserEventController;
 import io.github.hkusu.rxapp.ui.adapter.TodoListAdapter;
 import io.github.hkusu.rxapp.di.AppComponent;
@@ -39,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
     private UseCase useCase;
     private UserEventController userEventViewController;
-    private SubscriptionManager subscriptionManager;
     private TodoListAdapter todoListAdapter; // ListView用のAdapter
     private final List<Todo> todoList = new ArrayList<>(); // ListView用のデータセット
+    private SubscriptionManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         AppComponent appComponent = ((MainApplication) getApplication()).getAppComponent();
         useCase = appComponent.provideUseCase();
         userEventViewController = appComponent.provideUserEventController();
-        subscriptionManager = appComponent.provideSubscriptionManager();
+        sm = appComponent.provideSubscriptionManager();
 
         // ToolBarの設定
         toolbar.setTitle(R.string.app_name);
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         userEventViewController.onResume();
         // Todoデータの変更イベントを購読
-        subscriptionManager.subscribeMainThread(UseCase.TodoDataSetChangedEvent.class, event -> {
+        sm.subscribeMainThread(UseCase.TodoDataSetChangedEvent.class, event -> {
             // 画面の表示を更新
             updateView();
         });
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         userEventViewController.onPause();
-        subscriptionManager.unsubscribe(); // 購読を解除
+        sm.unsubscribe(); // 購読を解除
     }
 
     @Override
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     // 画面の表示を更新するPrivateメソッド
     @MainThread
     private void updateView() {
-        subscriptionManager.subscribeMainThread(
+        sm.subscribeMainThread(
                 useCase.getTodo()
                         .doOnNext(aTodoList -> {
                             // ListView のデータセットを変更
