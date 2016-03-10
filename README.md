@@ -14,3 +14,7 @@
 - [android-apt (ver 1.8)](https://bitbucket.org/hvisser/android-apt)
 
 > This project uses Java 8 and [Retrolambda](https://github.com/orfjackal/retrolambda).
+
+## License
+
+MIT
