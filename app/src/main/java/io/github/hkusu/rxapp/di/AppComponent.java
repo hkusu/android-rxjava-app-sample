@@ -4,8 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import io.github.hkusu.rxapp.model.usecase.UseCase;
-import io.github.hkusu.rxapp.util.RxEventBus;
-import io.github.hkusu.rxapp.util.SubscriptionManager;
+import io.github.hkusu.rxapp.lib.RxEventBus;
+import io.github.hkusu.rxapp.lib.SubscriptionManager;
 import io.github.hkusu.rxapp.ui.controller.UserEventController;
 
 @Singleton

@@ -1,4 +1,4 @@
-package io.github.hkusu.rxapp.ui.adapter;
+package io.github.hkusu.rxapp.ui.widget;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import butterknife.OnClick;
 import io.github.hkusu.rxapp.MainApplication;
 import io.github.hkusu.rxapp.R;
 import io.github.hkusu.rxapp.model.entity.Todo;
-import io.github.hkusu.rxapp.util.RxEventBus;
+import io.github.hkusu.rxapp.lib.RxEventBus;
 
 public class TodoListAdapter extends ArrayAdapter<Todo> {
     private final LayoutInflater layoutInflater;

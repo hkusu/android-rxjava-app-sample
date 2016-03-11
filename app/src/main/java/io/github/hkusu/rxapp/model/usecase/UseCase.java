@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 
 import io.github.hkusu.rxapp.model.entity.Todo;
 import io.github.hkusu.rxapp.model.repository.TodoRepository;
-import io.github.hkusu.rxapp.util.RxEventBus;
+import io.github.hkusu.rxapp.lib.RxEventBus;
 import rx.Observable;
 
 @Singleton

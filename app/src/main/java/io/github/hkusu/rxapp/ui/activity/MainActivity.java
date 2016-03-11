@@ -19,9 +19,9 @@ import io.github.hkusu.rxapp.MainApplication;
 import io.github.hkusu.rxapp.R;
 import io.github.hkusu.rxapp.model.entity.Todo;
 import io.github.hkusu.rxapp.model.usecase.UseCase;
-import io.github.hkusu.rxapp.util.SubscriptionManager;
+import io.github.hkusu.rxapp.lib.SubscriptionManager;
 import io.github.hkusu.rxapp.ui.controller.UserEventController;
-import io.github.hkusu.rxapp.ui.adapter.TodoListAdapter;
+import io.github.hkusu.rxapp.ui.widget.TodoListAdapter;
 import io.github.hkusu.rxapp.di.AppComponent;
 
 public class MainActivity extends AppCompatActivity {

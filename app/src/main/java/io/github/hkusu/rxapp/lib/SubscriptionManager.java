@@ -1,4 +1,4 @@
-package io.github.hkusu.rxapp.util;
+package io.github.hkusu.rxapp.lib;
 
 import javax.inject.Inject;
 
