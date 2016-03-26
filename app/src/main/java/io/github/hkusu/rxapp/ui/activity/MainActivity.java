@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import io.github.hkusu.rxapp.MainApplication;
 import io.github.hkusu.rxapp.R;
 import io.github.hkusu.rxapp.model.entity.Todo;
-import io.github.hkusu.rxapp.model.usecase.UseCase;
+import io.github.hkusu.rxapp.model.usecase.UserUseCase;
 import io.github.hkusu.rxapp.lib.SubscriptionManager;
 import io.github.hkusu.rxapp.ui.controller.UserEventController;
 import io.github.hkusu.rxapp.ui.widget.TodoListAdapter;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.todoListView)
     ListView todoListView;
 
-    private UseCase useCase;
+    private UserUseCase userUseCase;
     private UserEventController userEventViewController;
     private TodoListAdapter todoListAdapter; // ListView用のAdapter
     private final List<Todo> todoList = new ArrayList<>(); // ListView用のデータセット
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Dagger
         AppComponent appComponent = ((MainApplication) getApplication()).getAppComponent();
-        useCase = appComponent.provideUseCase();
+        userUseCase = appComponent.provideUserUseCase();
         userEventViewController = appComponent.provideUserEventController();
         sm = appComponent.provideSubscriptionManager();
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         userEventViewController.onResume();
         // Todoデータの変更イベントを購読
-        sm.subscribeMainThread(UseCase.TodoDataSetChangedEvent.class, event -> {
+        sm.subscribeMainThread(UserUseCase.TodoDataSetChangedEvent.class, event -> {
             // 画面の表示を更新
             updateView();
         });
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     @MainThread
     private void updateView() {
         sm.subscribeMainThread(
-                useCase.getTodo()
+                userUseCase.getTodo()
                         .doOnNext(aTodoList -> {
                             // ListView のデータセットを変更
                             todoList.clear();

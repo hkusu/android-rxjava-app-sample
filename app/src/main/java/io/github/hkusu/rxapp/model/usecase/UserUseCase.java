@@ -11,12 +11,12 @@ import io.github.hkusu.rxapp.lib.RxEventBus;
 import rx.Observable;
 
 @Singleton
-public class UseCase {
+public class UserUseCase {
     private final TodoRepository todoRepository;
     private final RxEventBus bus;
 
     @Inject
-    public UseCase(TodoRepository todoRepository, RxEventBus bus) {
+    public UserUseCase(TodoRepository todoRepository, RxEventBus bus) {
         this.todoRepository = todoRepository;
         this.bus = bus;
     }

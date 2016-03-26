@@ -20,7 +20,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import io.github.hkusu.rxapp.R;
-import io.github.hkusu.rxapp.model.usecase.UseCase;
+import io.github.hkusu.rxapp.model.usecase.UserUseCase;
 import io.github.hkusu.rxapp.lib.SubscriptionManager;
 import io.github.hkusu.rxapp.ui.widget.TodoListAdapter;
 import io.github.hkusu.rxapp.model.entity.Todo;
@@ -38,12 +38,12 @@ public class UserEventController extends ButterKnifeController<Void> {
     @Bind(R.id.todoListView)
     ListView todoListView;
 
-    private final UseCase useCase;
+    private final UserUseCase userUseCase;
     private final SubscriptionManager sm;
 
     @Inject
-    public UserEventController(UseCase useCase, SubscriptionManager sm) {
-        this.useCase = useCase;
+    public UserEventController(UserUseCase userUseCase, SubscriptionManager sm) {
+        this.userUseCase = userUseCase;
         this.sm = sm;
     }
 
@@ -64,7 +64,7 @@ public class UserEventController extends ButterKnifeController<Void> {
         sm.subscribeMainThread(TodoListAdapter.ViewHolder.DeleteButtonClickedEvent.class, event -> {
             // データ削除
             sm.subscribeMainThread(
-                    useCase.unregisterTodo(event.getId()),
+                    userUseCase.unregisterTodo(event.getId()),
                     aVoid -> {
                     }
             );
@@ -121,7 +121,7 @@ public class UserEventController extends ButterKnifeController<Void> {
         todo.text = (todoEditText.getText().toString());
         // データ登録
         sm.subscribeMainThread(
-                useCase.registerTodo(todo),
+                userUseCase.registerTodo(todo),
                 aVoid -> {
                     // 入力内容は空にする
                     todoEditText.setText(null);
