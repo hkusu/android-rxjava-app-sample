@@ -65,8 +65,7 @@ public class UserEventController extends ButterKnifeController<Void> {
             // データ削除
             sm.subscribeMainThread(
                     userUseCase.unregisterTodo(event.getId()),
-                    aVoid -> {
-                    }
+                    aVoid -> {}
             );
         });
     }
@@ -118,7 +117,7 @@ public class UserEventController extends ButterKnifeController<Void> {
         }
         // Todoデータを作成
         Todo todo = new Todo();
-        todo.text = (todoEditText.getText().toString());
+        todo.text = todoEditText.getText().toString();
         // データ登録
         sm.subscribeMainThread(
                 userUseCase.registerTodo(todo),

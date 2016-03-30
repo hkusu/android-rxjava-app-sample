@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 import io.github.hkusu.rxapp.MainApplication;
 import io.github.hkusu.rxapp.R;
 import io.github.hkusu.rxapp.model.entity.Todo;
+import io.github.hkusu.rxapp.model.repository.TodoRepository;
 import io.github.hkusu.rxapp.model.usecase.UserUseCase;
 import io.github.hkusu.rxapp.lib.SubscriptionManager;
 import io.github.hkusu.rxapp.ui.controller.UserEventController;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         userEventViewController.onResume();
         // Todoデータの変更イベントを購読
-        sm.subscribeMainThread(UserUseCase.TodoDataSetChangedEvent.class, event -> {
+        sm.subscribeMainThread(TodoRepository.getObservable(), id -> {
             // 画面の表示を更新
             updateView();
         });

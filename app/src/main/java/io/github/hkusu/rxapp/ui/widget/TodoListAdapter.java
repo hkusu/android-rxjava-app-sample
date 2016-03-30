@@ -57,7 +57,7 @@ public class TodoListAdapter extends ArrayAdapter<Todo> {
         Button deleteButton;
 
         private RxEventBus bus;
-        private int id; // Todoデータのid
+        private long id; // Todoデータのid
 
         private ViewHolder(View view, RxEventBus bus) {
             ButterKnife.bind(this, view); // ButterKnife
@@ -74,13 +74,13 @@ public class TodoListAdapter extends ArrayAdapter<Todo> {
         //イベント通知用クラス
         public static class DeleteButtonClickedEvent {
             // Todoデータのid
-            private int id;
+            private long id;
 
-            public DeleteButtonClickedEvent(int id) {
+            public DeleteButtonClickedEvent(long id) {
                 this.id = id;
             }
 
-            public int getId() {
+            public long getId() {
                 return id;
             }
         }
