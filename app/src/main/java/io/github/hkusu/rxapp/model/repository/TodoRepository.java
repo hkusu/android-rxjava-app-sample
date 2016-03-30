@@ -1,7 +1,5 @@
 package io.github.hkusu.rxapp.model.repository;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +8,7 @@ import javax.inject.Singleton;
 
 import io.github.hkusu.rxapp.model.entity.OrmaDatabase;
 import io.github.hkusu.rxapp.model.entity.Todo;
-import io.github.hkusu.rxapp.util.Util;
 import rx.Observable;
-import rx.Scheduler;
-import rx.Subscription;
-import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
