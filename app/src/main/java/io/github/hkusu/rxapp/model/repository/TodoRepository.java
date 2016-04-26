@@ -6,23 +6,16 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.github.hkusu.rxapp.lib.ObservableRepository;
 import io.github.hkusu.rxapp.model.entity.OrmaDatabase;
 import io.github.hkusu.rxapp.model.entity.Todo;
 import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
 
 @Singleton
-public class TodoRepository {
-    private static final Subject<Long, Long> subject = new SerializedSubject<>(PublishSubject.create());
+public class TodoRepository extends ObservableRepository<Long> {
     private final OrmaDatabase orma;
     private final List<Todo> todoListCache = new ArrayList<>();
     private boolean cacheLoaded = false;
-
-    public static Observable<Long> getObservable() {
-        return subject;
-    }
 
     @Inject
     public TodoRepository(OrmaDatabase orma) {
@@ -68,7 +61,7 @@ public class TodoRepository {
                         return refresh();
                     })
                     .subscribe(aVoid -> {
-                        subject.onNext(id[0]);
+                        getSubject().onNext(id[0]); // 変更通知
                         subs.onNext(null);
                         subs.onCompleted();
                     });
@@ -80,7 +73,7 @@ public class TodoRepository {
             Todo.relation(orma).deleter().idEq(id).executeAsObservable()
                     .flatMapObservable(aInteger -> refresh())
                     .subscribe(aVoid -> {
-                        subject.onNext(id);
+                        getSubject().onNext(id); // 変更通知
                         subs.onNext(null);
                         subs.onCompleted();
                     });

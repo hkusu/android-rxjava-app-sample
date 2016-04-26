@@ -20,10 +20,10 @@ import io.github.hkusu.rxapp.R;
 import io.github.hkusu.rxapp.di.AppComponent;
 import io.github.hkusu.rxapp.lib.SubscriptionManager;
 import io.github.hkusu.rxapp.model.entity.Todo;
-import io.github.hkusu.rxapp.model.repository.TodoRepository;
 import io.github.hkusu.rxapp.model.usecase.UserUseCase;
 import io.github.hkusu.rxapp.ui.controller.UserEventController;
 import io.github.hkusu.rxapp.ui.widget.TodoListAdapter;
+import rx.Observable;
 
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserUseCase userUseCase;
     private UserEventController userEventViewController;
+    private Observable<Long> todoRepositoryObservable;
     private TodoListAdapter todoListAdapter; // ListView用のAdapter
     private final List<Todo> todoList = new ArrayList<>(); // ListView用のデータセット
     private SubscriptionManager sm;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         AppComponent appComponent = ((MainApplication) getApplication()).getAppComponent();
         userUseCase = appComponent.provideUserUseCase();
         userEventViewController = appComponent.provideUserEventController();
+        todoRepositoryObservable = appComponent.provideTodoRepository().getObservable();
         sm = appComponent.provideSubscriptionManager();
 
         // ToolBarの設定
@@ -88,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         userEventViewController.onResume();
         // Todoデータの変更イベントを購読
-        sm.subscribeMainThread(TodoRepository.getObservable(), id -> {
-            // 画面の表示を更新
+        sm.subscribeMainThread(todoRepositoryObservable, id -> {
             updateView();
         });
     }
