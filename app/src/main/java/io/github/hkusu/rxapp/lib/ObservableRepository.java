@@ -16,9 +16,7 @@ public abstract class ObservableRepository<T> {
         return subject;
     }
 
-    @NonNull
-    @CheckResult
-    protected final Subject<T, T> getSubject() {
-        return subject;
+    protected final void notify(@NonNull T t) {
+        subject.onNext(t);
     }
 }

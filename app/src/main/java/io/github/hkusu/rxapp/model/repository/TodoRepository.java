@@ -61,7 +61,7 @@ public class TodoRepository extends ObservableRepository<Long> {
                         return refresh();
                     })
                     .subscribe(aVoid -> {
-                        getSubject().onNext(id[0]); // 変更通知
+                        notify(id[0]); // 変更通知
                         subs.onNext(null);
                         subs.onCompleted();
                     });
@@ -73,7 +73,7 @@ public class TodoRepository extends ObservableRepository<Long> {
             Todo.relation(orma).deleter().idEq(id).executeAsObservable()
                     .flatMapObservable(aInteger -> refresh())
                     .subscribe(aVoid -> {
-                        getSubject().onNext(id); // 変更通知
+                        notify(id); // 変更通知
                         subs.onNext(null);
                         subs.onCompleted();
                     });
