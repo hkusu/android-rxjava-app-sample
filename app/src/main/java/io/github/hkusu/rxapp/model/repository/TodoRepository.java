@@ -6,9 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.github.hkusu.rxapp.lib.ObservableRepository;
 import io.github.hkusu.rxapp.model.entity.OrmaDatabase;
 import io.github.hkusu.rxapp.model.entity.Todo;
+import io.github.hkusu.rxapp.model.repository.base.ObservableRepository;
 import rx.Observable;
 
 @Singleton

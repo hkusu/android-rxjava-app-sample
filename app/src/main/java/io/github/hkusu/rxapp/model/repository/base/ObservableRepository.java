@@ -1,4 +1,4 @@
-package io.github.hkusu.rxapp.lib;
+package io.github.hkusu.rxapp.model.repository.base;
 
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
