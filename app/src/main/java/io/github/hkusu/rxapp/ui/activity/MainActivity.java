@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         userEventViewController.onPause();
-        sm.unsubscribe(); // 購読を解除
+        sm.clear();
     }
 
     @Override

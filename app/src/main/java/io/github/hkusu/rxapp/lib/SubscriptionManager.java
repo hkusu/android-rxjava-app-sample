@@ -12,7 +12,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class SubscriptionManager {
     private final RxEventBus bus;
-    private CompositeSubscription cs;
+    private final CompositeSubscription cs;
 
     @Inject
     public SubscriptionManager (RxEventBus bus) {
@@ -21,23 +21,23 @@ public class SubscriptionManager {
     }
 
     public <T> void subscribe(Class<T> clazz, Scheduler scheduler, Action1<T> action) {
-        getAddableCompositeSubscription().add(bus.subscribe(clazz, scheduler, action));
+        cs.add(bus.subscribe(clazz, scheduler, action));
     }
 
     public <T> void subscribePostThread(Class<T> clazz, Action1<T> action) {
-        getAddableCompositeSubscription().add(bus.subscribePostThread(clazz, action));
+        cs.add(bus.subscribePostThread(clazz, action));
     }
 
     public <T> void subscribeMainThread(Class<T> clazz, Action1<T> action) {
-        getAddableCompositeSubscription().add(bus.subscribeMainThread(clazz, action));
+        cs.add(bus.subscribeMainThread(clazz, action));
     }
 
     public <T> void subscribeBackgroundThread(Class<T> clazz, Action1<T> action) {
-        getAddableCompositeSubscription().add(bus.subscribeBackgroundThread(clazz, action));
+        cs.add(bus.subscribeBackgroundThread(clazz, action));
     }
 
     public <T> void subscribe(Observable<T> observable, Scheduler scheduler, Action1<T> action) {
-        getAddableCompositeSubscription().add(observable
+        cs.add(observable
                         .subscribeOn(Schedulers.io())
                         .observeOn(scheduler)
                         .subscribe(action)
@@ -53,20 +53,19 @@ public class SubscriptionManager {
     }
 
     public SubscriptionManager add(Subscription subscription) {
-        getAddableCompositeSubscription().add(subscription);
+        cs.add(subscription);
         return this;
     }
 
-    public void unsubscribe() {
-        if (!cs.isUnsubscribed() && cs.hasSubscriptions()) {
-            cs.unsubscribe();
+    public void clear() {
+        if (cs.hasSubscriptions()) {
+            cs.clear();
         }
     }
 
-    private CompositeSubscription getAddableCompositeSubscription() {
-        if (cs.isUnsubscribed()) {
-            return cs = new CompositeSubscription();
+    public void unsubscribe() {
+        if (!cs.isUnsubscribed()) {
+            cs.unsubscribe();
         }
-        return cs;
     }
 }

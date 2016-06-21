@@ -20,11 +20,11 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import io.github.hkusu.rxapp.R;
-import io.github.hkusu.rxapp.model.usecase.UserUseCase;
 import io.github.hkusu.rxapp.lib.SubscriptionManager;
-import io.github.hkusu.rxapp.ui.widget.TodoListAdapter;
 import io.github.hkusu.rxapp.model.entity.Todo;
+import io.github.hkusu.rxapp.model.usecase.UserUseCase;
 import io.github.hkusu.rxapp.ui.controller.base.ButterKnifeController;
+import io.github.hkusu.rxapp.ui.widget.TodoListAdapter;
 
 public class UserEventController extends ButterKnifeController<Void> {
     @Bind(R.id.toolbar)
@@ -72,7 +72,7 @@ public class UserEventController extends ButterKnifeController<Void> {
 
     @Override
     public void onPause() {
-        sm.unsubscribe(); // 購読を解除
+        sm.clear();
     }
 
     // 入力エリアのテキスト変更
